@@ -3,7 +3,7 @@ from conans import ConanFile
 from conans.tools import download, unzip
 
 class Eigen3Conan(ConanFile):
-    name = "Eigen3"
+    name = "eigen3"
     description = "Eigen is a C++ template library for linear algebra"
     version = "3.3.4"
     generators = "cmake"
