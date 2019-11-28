@@ -1,13 +1,13 @@
 import os
-from conans import ConanFile
+from conans import ConanFile, CMake
 from conans.tools import download, unzip
 
 class Eigen3Conan(ConanFile):
     name = "eigen3"
     description = "Eigen is a C++ template library for linear algebra"
-    version = "3.3.4"
+    version = "3.3.7"
     generators = "cmake"
-    exports = ["FindEigen3.cmake"]
+    # exports = ["FindEigen3.cmake"]
     url="http://github.com/bilke/conan-eigen3"
     license="http://eigen.tuxfamily.org/index.php?title=Main_Page#License"
 
@@ -17,16 +17,21 @@ class Eigen3Conan(ConanFile):
         unzip(zip_name)
         os.unlink(zip_name)
 
-    def config(self):
-        self.options.remove("shared")
+    def configure_cmake(self):
+        cmake = CMake(self)
+        cmake.configure(source_folder="eigen-eigen-323c052e1731")
+        return cmake
 
     def build(self):
-        return
+
+        cmake = self.configure_cmake()
+        cmake.build()
+
 
     def package(self):
-        self.copy("FindEigen3.cmake", ".", ".")
-        self.copy("*", dst="Eigen", src="eigen-eigen-5a0156e40feb/Eigen")
-        self.copy("*", dst="unsupported", src="eigen-eigen-5a0156e40feb/unsupported")
+        cmake = self.configure_cmake()
+        cmake.install()
 
     def package_info(self):
-        self.cpp_info.includedirs = ['.', './unsupported']
+        return
+        # self.cpp_info.includedirs = ['.', './unsupported']
