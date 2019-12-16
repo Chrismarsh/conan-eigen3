@@ -1,19 +1,36 @@
-os: linux
-services:
-   - docker
-sudo: required
-language: python
 env:
-  global:
-    - CONAN_REFERENCE="Eigen3/3.3.4"
-    - CONAN_USERNAME="bilke"
-    - CONAN_LOGIN_USERNAME="jenkins"
-    - CONAN_CHANNEL="stable"
-    - CONAN_UPLOAD="https://ogs.jfrog.io/ogs/api/conan/conan"
+   global:
+      - CONAN_REFERENCE: "eigen3/3.3.7"
+      - CONAN_USERNAME: "CHM"
+      - CONAN_LOGIN_USERNAME: "chrismarsh"
+      - CONAN_CHANNEL: "stable"
+      - CONAN_UPLOAD: "https://api.bintray.com/conan/chrismarsh/CHM"
+      - MAKEFLAGS: "-j 2"
 
-  matrix:
-    - CONAN_GCC_VERSIONS=4.9 CONAN_DOCKER_IMAGE=lasote/conangcc49
+
+
+linux: &linux
+   os: linux
+   dist: xenial
+   language: python
+   python: "3.7"
+   services:
+      - docker
+osx: &osx
+   os: osx
+   language: generic
+matrix:
+   include:
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8 CONAN_CURRENT_PAGE="gcc"
+      - <<: *osx
+        osx_image: xcode11.2
+        env: CONAN_APPLE_CLANG_VERSIONS=11.0 CONAN_CURRENT_PAGE="apple-clang"
+
 install:
-  - ./.travis/install.sh
+   - chmod +x .travis/install.sh
+   - ./.travis/install.sh
+
 script:
-  - ./.travis/run.sh
+   - chmod +x .travis/run.sh
+   - ./.travis/run.sh
