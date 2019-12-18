@@ -10,12 +10,13 @@ class EigenConan(ConanFile):
     url="http://github.com/bilke/conan-eigen3"
     license="http://eigen.tuxfamily.org/index.php?title=Main_Page#License"
 
+
     def source(self):
         zip_name = "%s.zip" % self.version
         download("http://bitbucket.org/eigen/eigen/get/%s" % zip_name , zip_name)
         unzip(zip_name)
         os.unlink(zip_name)
-        os.rename(glob("eigen-eigen-*")[0], self._source_subfolder)
+        os.rename(glob("eigen-eigen-*")[0], "eigen")
 
     def configure_cmake(self):
         cmake = CMake(self)
