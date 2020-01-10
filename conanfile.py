@@ -7,7 +7,6 @@ class EigenConan(ConanFile):
     description = "Eigen is a C++ template library for linear algebra"
     version = "3.3.7"
     generators = "cmake"
-    settings = "os", "arch", "compiler", "build_type"
     url="http://github.com/bilke/conan-eigen3"
     license="http://eigen.tuxfamily.org/index.php?title=Main_Page#License"
 
