@@ -13,8 +13,8 @@ class EigenConan(ConanFile):
 
 
     def source(self):
-        zip_name = "%s.zip" % self.version
-        download("http://bitbucket.org/eigen/eigen/get/%s" % zip_name , zip_name)
+        zip_name = "eigen-%s.zip" % self.version
+        download("https://gitlab.com/libeigen/eigen/-/archive/%s/%s" % (version,zip_name))
         unzip(zip_name)
         os.unlink(zip_name)
         os.rename(glob("eigen-eigen-*")[0], "eigen")
