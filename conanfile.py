@@ -17,7 +17,7 @@ class EigenConan(ConanFile):
         download("https://gitlab.com/libeigen/eigen/-/archive/%s/%s" % (self.version,zip_name),zip_name)
         unzip(zip_name)
         os.unlink(zip_name)
-        os.rename(glob("eigen-eigen-*")[0], "eigen")
+        os.rename(glob("eigen-*")[0], "eigen")
 
     def configure_cmake(self):
         cmake = CMake(self)
