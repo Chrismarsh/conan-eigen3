@@ -1,5 +1,5 @@
 import os
-from conans import ConanFile, CMake
+from conans import ConanFile, CMake, tools
 from conans.tools import download, unzip
 from glob import glob
 class EigenConan(ConanFile):
