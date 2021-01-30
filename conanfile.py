@@ -5,19 +5,17 @@ from glob import glob
 class EigenConan(ConanFile):
     name = "eigen3"
     description = "Eigen is a C++ template library for linear algebra"
-    version = "3.3.7"
     generators = "cmake"
-    settings = None #header only
+    settings = None
     url="http://github.com/bilke/conan-eigen3"
     license="http://eigen.tuxfamily.org/index.php?title=Main_Page#License"
 
 
     def source(self):
-        zip_name = "eigen-%s.zip" % self.version
-        download("https://gitlab.com/libeigen/eigen/-/archive/%s/%s" % (self.version,zip_name),zip_name)
-        unzip(zip_name)
-        os.unlink(zip_name)
-        os.rename(glob("eigen-*")[0], "eigen")
+
+        tools.get(**self.conan_data["sources"][self.version])
+        os.rename("eigen-{}".format(self.version), 'eigen')
+
 
     def configure_cmake(self):
         cmake = CMake(self)
